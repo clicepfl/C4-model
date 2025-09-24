@@ -1,0 +1,195 @@
+specification {
+    element member {
+        style {
+            shape person
+        }
+    }
+    element system
+    element webapp {
+        style {
+            shape browser
+            color sky
+        }
+    }
+    element ext-system {
+        style {
+            color muted
+        }
+    }
+    element component
+}
+
+model {
+
+    clic-member = member 'IC Student' {
+        it -> clicketing 'Register to events'
+    }
+
+    committee-member = member 'Committee Member' {
+        style {
+            color indigo
+        }
+    }
+
+    commission-member = member 'Commission Member' {
+        style {
+            color sky
+        }
+    }
+
+    saitis = ext-system 'Saitis' 'ISP' {
+        it -> clic 'Provides connection'
+    }
+
+    lys-datacenter = ext-system 'Lys data center' {
+        it -> clic 'Hosts'
+    }
+
+    epfl-mail = ext-system 'Epfl Mail server'
+
+    matrix-client = ext-system 'Element' 'Matrix client' {
+        icon https://upload.wikimedia.org/wikipedia/commons/1/13/Element_%28software%29_logo_%282024%29.svg
+        style {
+            shape browser
+        }
+    }
+
+    telegram = ext-system 'Telegram' 'Messaging app' {
+        style {
+            shape mobile
+        }
+    }
+
+    clic = system 'CLIC infrastructure' {
+        icon https://clic.epfl.ch/directus/assets/ff29270b-7ec8-430b-9a84-2465ab70ac80
+
+        style {
+            opacity 10%
+        }
+
+        bookstack = webapp 'Bookstack' 'Wiki' {
+            icon https://clic.epfl.ch/directus/assets/31a7c44f-4616-4a0a-a7de-71b9d5eb6225
+        }
+
+        caddy = system 'Caddy' 'Reverse proxy' {
+            icon https://upload.wikimedia.org/wikipedia/commons/b/b8/Caddyserver_logo_light.svg
+        }
+
+        clicketing = webapp 'Clicketing' 'Register to events' {
+            link https://clic.epfl.ch/clicketing
+            link https://github.com/clicepfl/clicketing 'Repo'
+            link https://clic.epfl.ch/wiclic/books/it/page/clicketing 'Wiki'
+        }
+
+        crabfit = webapp 'CrabCLIC' 'Crabfit but more CLIC' {
+            link https://github.com/clicepfl/crab.fit 'Repo'
+            link https://clic.epfl.ch/wiclic/books/it/page/utility 'Wiki'
+            icon https://clic.epfl.ch/directus/assets/6919cc25-0425-4f92-8cc0-5ef9b89a314d
+        }
+
+        directus = component 'Directus' 'CMS' {
+            link https://clic.epfl.ch/directus/
+            icon https://clic.epfl.ch/directus/assets/5b76b15d-57a7-418c-a5a5-6430ebb68048
+
+            style {
+                shape cylinder
+            }
+
+            -> website 'Provides content'
+            -> roboclic 'List of members'
+            -> clicketing 'Event registration'
+
+        }
+
+        keycloack = component 'KeyCloak' 'SSO' {
+            link https://clic.epfl.ch/me
+            link https://clic.epfl.ch/wiclic/books/it/page/sso-keyclic 'Wiki'
+            icon https://clic.epfl.ch/directus/assets/e80f080a-20ef-40a8-9ec5-d9942813b3a2
+
+            -> bookstack 'Authenticate'
+            -> directus 'Authenticate'
+            -> nextcloud 'Authenticate'
+            -> synapse 'Authenticate'
+            committee-member -> it 'Authenticate'
+            commission-member -> it 'Authenticate'
+
+        }
+
+        mail-sender = component 'Mail Sender' {
+            link https://github.com/clicepfl/mail-sender 'Repo'
+            link https://clic.epfl.ch/wiclic/books/it/page/utility 'Wiki'
+
+            -> epfl-mail 'Sends mail'
+        }
+
+        nextcloud = webapp 'Nextclic' 'Nextcloud' {
+            link https://clic.epfl.ch/nextcloud/
+            link https://clic.epfl.ch/wiclic/books/it/page/nextcloud 'Wiki'
+            icon https://clic.epfl.ch/directus/assets/9cdd9cad-b346-4f5a-b901-dcbc859c7e76
+
+            -> onlyoffice 'File edition'
+        }
+
+        onlyoffice = component 'Onlyoffice' {
+            icon https://upload.wikimedia.org/wikipedia/commons/c/c3/ONLYOFFICE_logo_%28centered%29.svg
+        }
+
+        qrbill-generator = component 'QR-Bill Generator' {
+            link http://clic.epfl.ch/qrbill-generator
+            link https://github.com/clicepfl/qrbill-generator 'Repo'
+            link https://clic.epfl.ch/wiclic/books/it/page/utility 'Wiki'
+        }
+
+        roboclic = component 'Roboclic' 'Telegram Bot' {
+            link https://github.com/clicepfl/roboclic 'Repo'
+            link https://clic.epfl.ch/wiclic/books/it/page/roboclic 'Wiki'
+            -> telegram 'Communicate'
+        }
+
+        synapse = component 'Synapse Server' 'Matrix server' {
+            icon https://upload.wikimedia.org/wikipedia/commons/9/95/Matrix_logo.svg
+            matrix-client -> it 'Connects to'
+        }
+
+        vaultwarden = webapp 'Vaultwarden' 'Password manager' {
+            link https://clic.epfl.ch/armoire/#/vault
+            icon https://upload.wikimedia.org/wikipedia/commons/8/83/Vaultwarden_icon.svg
+        }
+
+        website = webapp 'CLIC Website' 'Created with Next.js' {
+            link https://clic.epfl.ch/
+            link https://github.com/clicepfl/clic-website-v2 'Repo'
+            link https://clic.epfl.ch/wiclic/books/it/page/website 'Wiki'
+            icon tech:nextjs
+        }
+    }
+}
+
+views {
+    view index {
+        description 'Global overview'
+        include *
+    }
+
+    view of clic {
+        title 'CLIC Infrastructure'
+        description 'All services'
+        include *
+    }
+
+    view keycloack {
+        title 'Resticted to CLIC members'
+        description 'Authorized-only services'
+
+        include keycloack, bookstack, directus, nextcloud, onlyoffice, synapse, commission-member, committee-member, vaultwarden, matrix-client, website
+
+        style * {
+            color indigo
+        }
+
+        style matrix-client, website {
+            color muted
+        }
+
+    }
+}

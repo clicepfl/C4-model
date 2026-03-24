@@ -79,6 +79,8 @@ model {
             link https://clic.epfl.ch/clicketing
             link https://github.com/clicepfl/clicketing 'Repo'
             link https://clic.epfl.ch/wiclic/books/it/page/clicketing 'Wiki'
+
+            -> mail-sender 'Uses'
         }
 
         crabfit = webapp 'CrabCLIC' 'Crabfit but more CLIC' {
@@ -87,7 +89,7 @@ model {
             icon https://clic.epfl.ch/directus/assets/6919cc25-0425-4f92-8cc0-5ef9b89a314d
         }
 
-        directus = component 'Directus' 'CMS' {
+        directus = component 'Directus' 'Content Management System' {
             link https://clic.epfl.ch/directus/
             icon https://clic.epfl.ch/directus/assets/5b76b15d-57a7-418c-a5a5-6430ebb68048
 
@@ -98,7 +100,8 @@ model {
             -> website 'Provides content'
             -> roboclic 'List of members'
             -> clicketing 'Event registration'
-
+            -> mail-sender 'Uses'
+            -> epfl-mail 'Sends mail'
         }
 
         keycloack = component 'KeyCloak' 'SSO' {

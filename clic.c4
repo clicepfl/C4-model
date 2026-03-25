@@ -79,6 +79,7 @@ model {
             link https://clic.epfl.ch/clicketing
             link https://github.com/clicepfl/clicketing 'Repo'
             link https://clic.epfl.ch/wiclic/books/it/page/clicketing 'Wiki'
+            icon https://clic.epfl.ch/directus/assets/8dde9f07-95bc-4359-ba32-2104a461f209
 
             -> mail-sender 'Uses'
         }

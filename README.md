@@ -23,4 +23,4 @@ Run: `npm run start` and open the given address in your browser.
 
 ## Documentation
 
-Documentation of LikeC4: https://likec4.dev/
+Documentation of LikeC4: <https://likec4.dev/>
